@@ -1,0 +1,17 @@
+{
+  "name": "Test Task",
+  "short_name": "Testtask",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Test Task.",
+  "icons": [{
+    "src": "icon.png",
+    "sizes": "32328",
+    "type": "image/png"
+  }],
+  "related_applications": [{
+    "platform": "web"
+  }
+  ]
+}
