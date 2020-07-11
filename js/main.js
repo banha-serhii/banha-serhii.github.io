@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return {
                 smallImageURL: el.webformatURL,
                 largeImageURL: el.largeImageURL,
-                alt: el.tags.split(', ')[0]
+                alt: el.tags.toString()
             }
         });
 
