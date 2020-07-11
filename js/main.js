@@ -144,20 +144,24 @@ let destroyBoxes = () => {
 /*  Begin Task #3 */
 
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById('search-form'),
-     loader = document.getElementById('loader'),
-     list = document.getElementById('list');
+    const API_KEY = '17038614-f96000dc79081ca876dadcf64';
+    const form = document.getElementById('search-form');
+    const loader = document.getElementById('loader');
+    const list = document.getElementById('list');
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const { search } = e.target[0];
-        getImages(search);
-        addInfinityScroll(search);
+        const { value } = e.target[0];
+        list.innerHTML = '<li style="display: none"></li>';
+
+        getImages(value);
+        addInfinityScroll(value);
     });
 
     async function getImages(value) {
         loader.classList.remove('hide');
-        const API = 'https://pixabay.com/api/?key=17406489-32bfb5a0a88da543b8b22139a&q=' + value + '&image_type=photo';
+
+        const API = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(value)}&image_type=photo`;
 
         const response = await fetch(API);
         const result = await response.json();
@@ -166,19 +170,18 @@ document.addEventListener("DOMContentLoaded", () => {
             return {
                 smallImageURL: el.webformatURL,
                 largeImageURL: el.largeImageURL,
-                alt: el.tags.toString()
+                alt: el.tags.split(', ')[0]
             }
         });
 
         const imagesList = images.map((img) => {
             return `
-        <li>
+        <li style="list-style: none; text-align: center">
   
             <img
             src="${img.smallImageURL}"
             data-source="${img.largeImageURL}"
             alt="${img.alt}"
-            class="lazy"
             onclick="showLargeImage('${img.largeImageURL}')"
             />
       
@@ -191,29 +194,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-        var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-
-        if ("IntersectionObserver" in window) {
-            let lazyImageObserver = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        let lazyImage = entry.target;
-                        lazyImage.src = lazyImage.dataset.src;
-                        lazyImage.srcset = lazyImage.dataset.srcset;
-                        lazyImage.classList.remove("lazy");
-                        lazyImageObserver.unobserve(lazyImage);
-                    }
-                });
-            });
-
-            lazyImages.forEach(function(lazyImage) {
-                lazyImageObserver.observe(lazyImage);
-            });
-        } else {
-            // Possibly fall back to event handlers here
-        }
-    });
     function addInfinityScroll(value) {
         let observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -232,8 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function showLargeImage(link, tags) {
     basicLightbox.create(`
-		<img  src="${link}" alt="${tags}">
+		<img src="${link}" alt="${tags}">
 	`).show()
 }
-
 /*  End Task #3 */

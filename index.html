@@ -116,7 +116,7 @@
         <button onclick="toggleSource3()">Show Source</button>
     </div>
 </div>
-<div id="source-1" style="display: none" >
+<div id="source-1" class="result" style="display: none" >
     <pre>
       <code>
 class StringBuilder {
@@ -149,7 +149,7 @@ class StringBuilder {
       </code>
     </pre>
 </div>
-<div id="source-2" style="display: none" >
+<div id="source-2" class="result" style="display: none" >
     <pre>
         <code>
             const generatedCollection = document.querySelector('#boxes'),
@@ -191,7 +191,7 @@ let destroyBoxes = () => {
         </code>
     </pre>
 </div>
-<div id="source-3" style="display: none" >
+<div id="source-3" class="result" style="display: none" >
     <pre>
         <code>
             const generatedCollection = document.querySelector('#boxes'),
@@ -234,7 +234,7 @@ let destroyBoxes = () => {
     </pre>
 </div>
 
-<div id="result-2" style="display: none">
+<div id="result-2" class="result" style="display: none">
     <div class="content__controls" id="controls">
         <label for="number">Сгенерировать колекцию
             <input placeholder="Введите число" name="number" id="number" type="number" min="0" max="100"
@@ -247,7 +247,7 @@ let destroyBoxes = () => {
     </div>
     <div id="boxes"></div>
 </div>
-<div id="result-3" style="display: none">
+<div id="result-3" class="result" style="display: none">
     <form id="search-form">
         <label for="query">Найти изобржение по ключевому слову
             <input type="text" id="query" name="query" autocomplete="off" placeholder="Search images..."/>

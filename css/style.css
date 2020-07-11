@@ -15,6 +15,18 @@ h2 {
     text-align: center;
 }
 
+button {
+    margin: 20px;
+    width: 100px;
+    padding: 5px;
+    background: #fff;
+    color: #212121;
+}
+.result {
+    margin-top: 20px;
+    background: lightpink;
+}
+
 #list {
     display: flex;
     flex-wrap: wrap;
