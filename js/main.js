@@ -151,8 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const { value } = e.target[0];
-        list.innerHTML = '<li style="display: none"></li>';
-
         getImages(value);
         addInfinityScroll(value);
     });
