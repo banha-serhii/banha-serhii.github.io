@@ -194,41 +194,74 @@ let destroyBoxes = () => {
 <div id="source-3" class="result" style="display: none" >
     <pre>
         <code>
-            const generatedCollection = document.querySelector('#boxes'),
-    createButton = document.querySelector('button[data-action=create]'),
-    destroyButton = document.querySelector('button[data-action=destroy]');
+          document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById('search-form');
+    const loader = document.getElementById('loader');
+    const list = document.getElementById('list');
 
-createButton.addEventListener('click', () => {
-    destroyBoxes();
-    let amount = document.querySelector('.js-input').value;
-    if (amount <= 0 || amount > 100) {
-        alert('Введите, пожалуйста цифру в диапазоне от 1 до 100');
-    } else {
-        createBoxes(amount);
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const { value } = e.target[0];
+        getImages(value);
+        addInfinityScroll(value);
+    });
+
+    async function getImages(value) {
+        loader.classList.remove('hide');
+
+        const API = 'https://pixabay.com/api/?key=17406489-32bfb5a0a88da543b8b22139a&q=' + value + '&image_type=photo';
+
+        const response = await fetch(API);
+        const result = await response.json();
+
+        const images = result.hits.map((el) => {
+            return {
+                smallImageURL: el.webformatURL,
+                largeImageURL: el.largeImageURL,
+                alt: el.tags.toString()
+            }
+        });
+
+        const imagesList = images.map((img) => {
+            return `
+        li style="list-style: none; text-align: center">
+
+            img
+                    src="${img.smallImageURL}"
+                    data-source="${img.largeImageURL}"
+                    alt="${img.alt}"
+                    onclick="showLargeImage('${img.largeImageURL}')"
+            />
+
+        /li>
+      `;
+        });
+        loader.classList.add('hide');
+        for (let i = 0; i < imagesList.length; i++) {
+            list.insertAdjacentHTML('beforeend', imagesList[i]);
+        }
+    }
+
+    function addInfinityScroll(value) {
+        let observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    getImages(value)
+                }
+                observer.unobserve(entry.target)
+                observer.observe(document.querySelector('li:last-child'))
+            })
+        }, {
+            threshold: 1
+        })
+        observer.observe(document.querySelector('li'))
     }
 });
 
-destroyButton.addEventListener('click', () => {
-    destroyBoxes();
-    document.querySelector('.js-input').value = '';
-});
-
-let createBoxes = (amount) => {
-    let size = 20;
-    for (let i = 0; i < amount; i++) {
-        let amountDiv = document.createElement('div');
-        size = size + 10;
-        amountDiv.style.width = size + 'px';
-        amountDiv.style.height = size + 'px';
-        amountDiv.style.backgroundColor = 'rgb(' + (Math.floor(Math.random() * 256)) + ','
-            + (Math.floor(Math.random() * 256)) + ','
-            + (Math.floor(Math.random() * 256)) + ')';
-        generatedCollection.append(amountDiv);
-    }
-}
-
-let destroyBoxes = () => {
-    generatedCollection.innerHTML = null;
+function showLargeImage(link, tags) {
+    basicLightbox.create(`
+		img src="${link}" alt="${tags}">
+	`).show()
 }
         </code>
     </pre>
