@@ -9,20 +9,90 @@
     <link type="text/css" rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Google+Sans:400,500,700">
 
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
+    <meta name="theme-color" content="#fafafa">
 
     <link rel="icon" href="icon.png" sizes="32x32">
 
-    <link rel="manifest" href="site.webmanifest">
+    <!--    <link rel="manifest" href="site.webmanifest">-->
     <link rel="apple-touch-icon" href="icon.png">
-    <!-- Place favicon.ico in the root directory -->
 
     <link rel="stylesheet" href="css/style.css">
 
-    <meta name="theme-color" content="#fafafa">
+    <link rel="stylesheet" href="https://s.electerious.com/basicLightbox/dist/basicLightbox.min.css">
+    <script src="https://s.electerious.com/basicLightbox/dist/basicLightbox.min.js"></script>
+    <style>
+        .loader {
+            font-size: 10px;
+            margin: 50px auto;
+            text-indent: -9999em;
+            width: 11em;
+            height: 11em;
+            border-radius: 50%;
+            background: #63c3f2;
+            background: -moz-linear-gradient(left, #63c3f2 10%, rgba(99, 195, 242, 0) 42%);
+            background: -webkit-linear-gradient(left, #63c3f2 10%, rgba(99, 195, 242, 0) 42%);
+            background: -o-linear-gradient(left, #63c3f2 10%, rgba(99, 195, 242, 0) 42%);
+            background: -ms-linear-gradient(left, #63c3f2 10%, rgba(99, 195, 242, 0) 42%);
+            background: linear-gradient(to right, #63c3f2 10%, rgba(99, 195, 242, 0) 42%);
+            position: relative;
+            -webkit-animation: load3 1.4s infinite linear;
+            animation: load3 1.4s infinite linear;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+
+        .loader:before {
+            width: 50%;
+            height: 50%;
+            background: #63c3f2;
+            border-radius: 100% 0 0 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+        }
+
+        .loader:after {
+            background: #ffffff;
+            width: 75%;
+            height: 75%;
+            border-radius: 50%;
+            content: '';
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        @-webkit-keyframes load3 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes load3 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div class="header">
@@ -32,16 +102,164 @@
 <div class="content">
     <div class="content__task">
         <h3>Task 1</h3>
+        <button onclick="showResult1()">Show result</button>
+        <button onclick="toggleSource1()">Show Source</button>
     </div>
     <div class="content__task">
         <h3>Task 2</h3>
+        <button onclick="showResult2()">Show result</button>
+        <button onclick="toggleSource2()">Show Source</button>
     </div>
     <div class="content__task">
         <h3>Task 3</h3>
+        <button onclick="showResult3()">Show result</button>
+        <button onclick="toggleSource3()">Show Source</button>
     </div>
+</div>
+<div id="source-1" style="display: none" >
+    <pre>
+      <code>
+class StringBuilder {
+
+    // Значение по умолчанию для параметра baseString это пустая строка.
+    constructor(baseString = '') {
+        // У экземпляра будет свойство value, в которое записывается значение параметра baseString.
+        this.value = baseString;
+    }
+
+    // Метод append(str) - получает парметр str (строку) и добавляет ее в конец свойства value.
+    append(str) {
+        this.value = this.value + str;
+        return this;
+    }
+
+    // Метод prepend(str) - получает парметр str (строку) и добавляет ее в начало свойства value.
+    prepend(str) {
+        this.value = str + this.value;
+        return this;
+    }
+
+    // Метод pad(str) - получает парметр str (строку) и добавляет ее в начало и в конец свойства
+    // value.
+    pad(str) {
+        this.value = str + this.value + str;
+        return this;
+    }
+}
+      </code>
+    </pre>
+</div>
+<div id="source-2" style="display: none" >
+    <pre>
+        <code>
+            const generatedCollection = document.querySelector('#boxes'),
+    createButton = document.querySelector('button[data-action=create]'),
+    destroyButton = document.querySelector('button[data-action=destroy]');
+
+createButton.addEventListener('click', () => {
+    destroyBoxes();
+    let amount = document.querySelector('.js-input').value;
+    if (amount <= 0 || amount > 100) {
+        alert('Введите, пожалуйста цифру в диапазоне от 1 до 100');
+    } else {
+        createBoxes(amount);
+    }
+});
+
+destroyButton.addEventListener('click', () => {
+    destroyBoxes();
+    document.querySelector('.js-input').value = '';
+});
+
+let createBoxes = (amount) => {
+    let size = 20;
+    for (let i = 0; i < amount; i++) {
+        let amountDiv = document.createElement('div');
+        size = size + 10;
+        amountDiv.style.width = size + 'px';
+        amountDiv.style.height = size + 'px';
+        amountDiv.style.backgroundColor = 'rgb(' + (Math.floor(Math.random() * 256)) + ','
+            + (Math.floor(Math.random() * 256)) + ','
+            + (Math.floor(Math.random() * 256)) + ')';
+        generatedCollection.append(amountDiv);
+    }
+}
+
+let destroyBoxes = () => {
+    generatedCollection.innerHTML = null;
+}
+        </code>
+    </pre>
+</div>
+<div id="source-3" style="display: none" >
+    <pre>
+        <code>
+            const generatedCollection = document.querySelector('#boxes'),
+    createButton = document.querySelector('button[data-action=create]'),
+    destroyButton = document.querySelector('button[data-action=destroy]');
+
+createButton.addEventListener('click', () => {
+    destroyBoxes();
+    let amount = document.querySelector('.js-input').value;
+    if (amount <= 0 || amount > 100) {
+        alert('Введите, пожалуйста цифру в диапазоне от 1 до 100');
+    } else {
+        createBoxes(amount);
+    }
+});
+
+destroyButton.addEventListener('click', () => {
+    destroyBoxes();
+    document.querySelector('.js-input').value = '';
+});
+
+let createBoxes = (amount) => {
+    let size = 20;
+    for (let i = 0; i < amount; i++) {
+        let amountDiv = document.createElement('div');
+        size = size + 10;
+        amountDiv.style.width = size + 'px';
+        amountDiv.style.height = size + 'px';
+        amountDiv.style.backgroundColor = 'rgb(' + (Math.floor(Math.random() * 256)) + ','
+            + (Math.floor(Math.random() * 256)) + ','
+            + (Math.floor(Math.random() * 256)) + ')';
+        generatedCollection.append(amountDiv);
+    }
+}
+
+let destroyBoxes = () => {
+    generatedCollection.innerHTML = null;
+}
+        </code>
+    </pre>
+</div>
+
+<div id="result-2" style="display: none">
+    <div class="content__controls" id="controls">
+        <label for="number">Сгенерировать колекцию
+            <input placeholder="Введите число" name="number" id="number" type="number" min="0" max="100"
+                   step="1"
+                   class="js-input"/>
+        </label>
+        <button type="button" data-action="create">Создать</button>
+
+        <button type="button" data-action="destroy">Очистить</button>
+    </div>
+    <div id="boxes"></div>
+</div>
+<div id="result-3" style="display: none">
+    <form id="search-form">
+        <label for="query">Найти изобржение по ключевому слову
+            <input type="text" id="query" name="query" autocomplete="off" placeholder="Search images..."/>
+        </label>
+    </form>
+    <div class="loader hide" id="loader"></div>
+    <ul id="list">
+    </ul>
 </div>
 
 
-        <script src="js/main.js"></script>
+<script src="https://github.com/electerious/basicLightbox/blob/master/dist/basicLightbox.min.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
