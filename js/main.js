@@ -144,7 +144,6 @@ let destroyBoxes = () => {
 /*  Begin Task #3 */
 
 document.addEventListener("DOMContentLoaded", () => {
-    const API_KEY = '17038614-f96000dc79081ca876dadcf64';
     const form = document.getElementById('search-form');
     const loader = document.getElementById('loader');
     const list = document.getElementById('list');
@@ -161,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function getImages(value) {
         loader.classList.remove('hide');
 
-        const API = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(value)}&image_type=photo`;
+        const API = 'https://pixabay.com/api/?key=17406489-32bfb5a0a88da543b8b22139a&q=' + value + '&image_type=photo';
 
         const response = await fetch(API);
         const result = await response.json();
